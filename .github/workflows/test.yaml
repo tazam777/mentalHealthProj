@@ -1,0 +1,55 @@
+name: Run Tests on Multiple OS
+
+on:
+  push:
+    branches:
+      - '**'    # Run on push to any branch
+  pull_request:
+    branches:
+      - main    # Run when a pull request is made to the main branch
+
+jobs:
+  test:
+    name: Test on ${{ matrix.os }}
+    runs-on: ubuntu-latest
+    
+    defaults:
+      run:
+        shell: bash -el {0}
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - name: Install Miniconda
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          auto-activate-base: false
+          python-version: 3.8
+
+      - name: Remove existing environment (if exists)
+        run: conda env remove -n hw8-ted || echo "Environment does not exist"
+
+      - name: Create environment from environment.yaml
+        run: conda env create -f environment.yaml
+
+      - name: Initialize Conda and Activate environment
+        run: |
+          conda activate hw8-ted
+
+      - name: Run tests with pytest
+        run: |
+          conda install pytest 
+          conda install seaborn 
+          python -m pip install --upgrade pip
+          conda install numpy  
+          conda install pandas 
+          conda install matplotlib
+          pytest --maxfail=1 --disable-warnings
+
+          

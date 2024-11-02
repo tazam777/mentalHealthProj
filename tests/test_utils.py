@@ -32,25 +32,6 @@ def test_handle_outliers_z_score(sample_dataframe):
     df_cleaned = handle_outliers(sample_dataframe, 'A', method='Z-score', z_score_threshold=1.9)
     assert df_cleaned['A'].max() < 1000, "Outlier was not removed with Z-score method"
 
-
-# def test_encode_and_transform(sample_dataframe):
-#     """Test encode_and_transform for encoding categorical columns."""
-#     columns_to_encode = ['B', 'C']
-#     df_encoded, label_encoders = encode_and_transform(sample_dataframe, columns_to_encode)
-
-#     assert 'B' in df_encoded.columns
-#     assert 'C' in df_encoded.columns
-#     assert pd.api.types.is_integer_dtype(df_encoded['B'])
-#     assert pd.api.types.is_integer_dtype(df_encoded['C'])
-
-#     # Ensure that label encoders are created
-#     assert 'B' in label_encoders
-#     assert 'C' in label_encoders
-
-#     # Test using the existing encoders for consistent encoding
-#     df_reencoded, _ = encode_and_transform(df_encoded, columns_to_encode, label_encoders=label_encoders)
-#     assert df_encoded.equals(df_reencoded)
-
 def test_encode_and_transform(sample_dataframe):
     """Test encode_and_transform for encoding categorical columns."""
     columns_to_encode = ['B', 'C']

@@ -1,0 +1,11 @@
+name: hw8-ted
+channels:
+  - defaults
+  - bioconda
+dependencies:
+  - python
+  - numpy
+  - matplotlib
+  - seaborn
+  - pandas
+  - snakemake
