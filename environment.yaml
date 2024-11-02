@@ -1,11 +1,15 @@
-name: hw8-ted
+name: mental-health
 channels:
   - defaults
-  - bioconda
+  - conda-forge
 dependencies:
   - python
+  - pandas
   - numpy
+  - scikit-learn
   - matplotlib
   - seaborn
-  - pandas
-  - snakemake
+  - pycountry
+  - scipy
+  - pip:
+    - pytest
