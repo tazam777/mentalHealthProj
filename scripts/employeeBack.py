@@ -1,11 +1,13 @@
-import os
+from flask import Flask, request, jsonify
+from flask_cors import CORS  # Import CORS
 import joblib
+import os
 import numpy as np
 import pandas as pd
-from flask import Flask, request, jsonify
 
 # Step 1: Set up Flask app
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
 # Paths for the models folder relative to this script
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../models"))
