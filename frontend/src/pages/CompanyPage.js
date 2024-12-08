@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { COMPANY_API_URL, fetchPrediction } from "../api/api";
+import "./CompanyPage.css";
 
 const CompanyPage = () => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         benefits: "",
         wellness_program: "",
@@ -26,16 +29,21 @@ const CompanyPage = () => {
         setResult(null);
         try {
             const response = await fetchPrediction(COMPANY_API_URL, formData);
-            setResult(response); // Save the entire response to display both prediction and confidence
+            setResult(response);
         } catch (err) {
             setError("Error fetching prediction. Please try again.");
         }
     };
 
     return (
-        <div className="page-container">
-            <h1>Company Mental Health Prediction</h1>
-            <form onSubmit={handleSubmit} className="form">
+        <div className="company-container">
+            <header className="company-header">
+                <h1>Company Mental Health Prediction</h1>
+                <p>
+                    Enter details about your company to predict if it’s mental health-friendly.
+                </p>
+            </header>
+            <form onSubmit={handleSubmit} className="company-form">
                 {[
                     { label: "Benefits", name: "benefits", placeholder: "Yes or No" },
                     { label: "Wellness Program", name: "wellness_program", placeholder: "Yes or No" },
@@ -47,8 +55,9 @@ const CompanyPage = () => {
                     { label: "Supervisor", name: "supervisor", placeholder: "Yes or No" },
                 ].map((field) => (
                     <div className="form-group" key={field.name}>
-                        <label>{field.label}:</label>
+                        <label htmlFor={field.name}>{field.label}:</label>
                         <input
+                            id={field.name}
                             type="text"
                             name={field.name}
                             value={formData[field.name]}
@@ -57,17 +66,20 @@ const CompanyPage = () => {
                         />
                     </div>
                 ))}
-                <button type="submit">Submit</button>
+                <button type="submit" className="submit-button">Submit</button>
             </form>
             {error && <p className="error-message">{error}</p>}
             {result && (
-                <div>
+                <div className="result-container">
                     <p className="result-message">
                         Prediction: {result.mental_health_friendly ? "Mental Health Friendly" : "Not Mental Health Friendly"}
                     </p>
-                    <p className="result-message">Confidence: {result.confidence}%</p>
+                    <p className="result-confidence">Confidence: {result.confidence}%</p>
                 </div>
             )}
+            <button className="back-button" onClick={() => navigate("/")}>
+                Back to Home
+            </button>
         </div>
     );
 };
