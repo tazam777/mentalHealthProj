@@ -1,13 +1,16 @@
 # Ignore Python cache files
 __pycache__/
 *.py[cod]
+*$py.class
+
+# C extensions
+*.so
 
 # Ignore virtual environments
 env/
 venv/
+mental-health/
 
-# Ignore Jupyter Notebook checkpoints
-.ipynb_checkpoints/
 
 # Ignore logs
 *.log
@@ -16,12 +19,56 @@ venv/
 .DS_Store
 Thumbs.db
 
-# Python virtual environment
-mental-health/
-
-# Node.js modules
-node_modules/
 
 # Editor-specific files
 .vscode/
 .idea/
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Pytest cache
+.cache/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+
+# macOS
+.DS_Store
+
+# npm
+node_modules/
+npm-debug.log*
+package-lock.json
+
+# Logs
+*.log
+
+# Coverage reports
+htmlcov/
+.coverage
+*.cover
+*.py,cover
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.lcov
