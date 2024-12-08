@@ -30,7 +30,17 @@ label_encoders = {
 
 # Handle unseen labels
 def handle_unseen_labels(feature, value, encoder):
-    """Check if value exists in encoder classes; if not, map it to the most frequent class."""
+    """
+    Handles unseen labels during prediction.
+
+    Args:
+        feature (str): Name of the feature being processed.
+        value (str): The value provided for the feature.
+        encoder (LabelEncoder): The LabelEncoder associated with the feature.
+
+    Returns:
+        int: Encoded value for the feature.
+    """
     print(f"Encoder classes for '{feature}': {list(encoder.classes_)}")
     if value not in encoder.classes_:
         print(f"Unseen label '{value}' for feature '{feature}', mapping to default.")
@@ -39,10 +49,27 @@ def handle_unseen_labels(feature, value, encoder):
 
 @app.route('/')
 def home():
+    """
+    Home endpoint to check the API's health.
+
+    Returns:
+        str: A success message indicating the API is running.
+    """
     return "Company API is running!", 200
 
 @app.route('/predict', methods=['POST'])
 def predict():
+    """
+    Predicts whether a company is mental health-friendly based on input features.
+
+    Request Body:
+        JSON containing values for required features:
+        - benefits, wellness_program, anonymity, leave, seek_help,
+          remote_work, mental_health_consequence, supervisor.
+
+    Returns:
+        JSON: A dictionary with the prediction and confidence score, or an error message.
+    """
     try:
         # Get JSON input
         input_data = request.json
@@ -77,4 +104,5 @@ def predict():
 
 # Run Flask app
 if __name__ == '__main__':
+    # Set debug to True for development purposes
     app.run(debug=True, port=5001)

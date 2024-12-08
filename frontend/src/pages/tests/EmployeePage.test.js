@@ -112,6 +112,7 @@ describe("EmployeePage Component", () => {
     test("updates input values correctly", () => {
         render(<EmployeePage />);
 
+        // Verify that input values update correctly when changed
         const selfEmployedInput = screen.getByLabelText(/Self-Employed:/i);
         fireEvent.change(selfEmployedInput, { target: { value: "Yes" } });
         expect(selfEmployedInput.value).toBe("Yes");

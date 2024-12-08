@@ -3,8 +3,19 @@ import { useNavigate } from "react-router-dom";
 import { EMPLOYEE_API_URL, fetchPrediction } from "../api/api";
 import "./EmployeePage.css";
 
+/**
+ * EmployeePage Component
+ * 
+ * This component provides a form for employees to input their personal details 
+ * and workplace environment characteristics to predict if the environment is mental health-friendly.
+ * 
+ * Functionalities:
+ * - Collects user input for various fields related to workplace mental health factors.
+ * - Submits data to the prediction API and displays the result.
+ * - Includes error handling and a navigation button to return to the home page.
+ */
 const EmployeePage = () => {
-    const navigate = useNavigate();
+    const navigate = useNavigate(); // Navigation hook for routing
     const [formData, setFormData] = useState({
         self_employed: "",
         work_interfere: "",
@@ -16,22 +27,31 @@ const EmployeePage = () => {
         treatment: "",
     });
 
-    const [result, setResult] = useState(null);
-    const [error, setError] = useState(null);
+    const [result, setResult] = useState(null); // Stores the prediction result
+    const [error, setError] = useState(null); // Stores error messages
 
+    /**
+     * Updates form data state when input changes.
+     * @param {Object} e - The event triggered by input changes.
+     */
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    /**
+     * Handles form submission, sends data to the prediction API, 
+     * and updates result or error state accordingly.
+     * @param {Object} e - The form submission event.
+     */
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError(null);
-        setResult(null);
+        setError(null); // Reset error state
+        setResult(null); // Reset result state
         try {
-            const response = await fetchPrediction(EMPLOYEE_API_URL, formData);
-            setResult(response);
+            const response = await fetchPrediction(EMPLOYEE_API_URL, formData); // Fetch prediction from API
+            setResult(response); // Store the prediction result
         } catch (err) {
-            setError("Error fetching prediction. Please try again.");
+            setError("Error fetching prediction. Please try again."); // Set error message
         }
     };
 
@@ -44,6 +64,7 @@ const EmployeePage = () => {
                 </p>
             </header>
             <form onSubmit={handleSubmit} className="employee-form">
+                {/* Dynamically generate form fields */}
                 {[
                     { label: "Self-Employed", name: "self_employed", placeholder: "Yes or No" },
                     { label: "Work Interfere", name: "work_interfere", placeholder: "Rarely, Often, etc." },
@@ -68,7 +89,7 @@ const EmployeePage = () => {
                 ))}
                 <button type="submit" className="submit-button">Submit</button>
             </form>
-            {error && <p className="error-message">{error}</p>}
+            {error && <p className="error-message">{error}</p>} {/* Display error message */}
             {result && (
                 <div className="result-container">
                     <p className="result-message">

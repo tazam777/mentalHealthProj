@@ -32,7 +32,15 @@ engineered_features = ['policy_support_score', 'self_employed_remote_work',
                        'benefits_leave_interaction', 'care_options_work_interaction']
 
 def preprocess_input(data):
-    """Preprocess input data: encode categorical features, engineer new features, and scale."""
+    """
+    Preprocess input data: encode categorical features, engineer new features, and scale.
+
+    Args:
+        data (dict): Input feature values in JSON format.
+
+    Returns:
+        numpy.ndarray: Preprocessed and scaled feature values ready for model prediction.
+    """
     # Apply label encoding
     for col in employee_features:
         if col in label_encoders:
@@ -62,11 +70,28 @@ def preprocess_input(data):
 
 @app.route('/')
 def home():
+    """
+    Home endpoint to check if the API is running.
+
+    Returns:
+        str: A success message indicating the API is active.
+    """
     return "Employee API is running!", 200
 
 # Step 4: Define prediction endpoint
 @app.route('/predict', methods=['POST'])
 def predict():
+    """
+    Predict whether an employee's environment is mental health-friendly.
+
+    Request Body:
+        JSON containing values for required features:
+        - self_employed, work_interfere, remote_work, family_history, benefits,
+          leave, care_options, treatment.
+
+    Returns:
+        JSON: A dictionary containing the prediction result or an error message.
+    """
     try:
         # Parse input JSON
         input_data = request.json
@@ -87,4 +112,5 @@ def predict():
 
 # Step 5: Run Flask app
 if __name__ == "__main__":
+    # Start the Flask application on port 5003
     app.run(debug=True, port=5003)  # Use a different port if needed

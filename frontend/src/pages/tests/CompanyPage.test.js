@@ -115,6 +115,7 @@ describe("CompanyPage Component", () => {
     test("updates input values correctly", () => {
         render(<CompanyPage />);
 
+        // Verify that input values update correctly when changed
         const benefitsInput = screen.getByLabelText(/Benefits:/i);
         fireEvent.change(benefitsInput, { target: { value: "Yes" } });
         expect(benefitsInput.value).toBe("Yes");

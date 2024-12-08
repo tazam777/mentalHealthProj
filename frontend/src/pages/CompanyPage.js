@@ -3,8 +3,19 @@ import { useNavigate } from "react-router-dom";
 import { COMPANY_API_URL, fetchPrediction } from "../api/api";
 import "./CompanyPage.css";
 
+/**
+ * CompanyPage Component
+ * 
+ * This component provides a form for users to input company-specific details 
+ * and receive predictions on whether the company environment is mental health-friendly.
+ * 
+ * Functionalities:
+ * - Accepts user input for various fields related to company mental health practices.
+ * - Submits the data to a prediction API and displays the result.
+ * - Includes error handling and a back navigation button to return to the home page.
+ */
 const CompanyPage = () => {
-    const navigate = useNavigate();
+    const navigate = useNavigate(); // Navigation hook for routing
     const [formData, setFormData] = useState({
         benefits: "",
         wellness_program: "",
@@ -16,22 +27,31 @@ const CompanyPage = () => {
         supervisor: "",
     });
 
-    const [result, setResult] = useState(null);
-    const [error, setError] = useState(null);
+    const [result, setResult] = useState(null); // Stores the prediction result
+    const [error, setError] = useState(null); // Stores error messages
 
+    /**
+     * Updates form data state when input changes.
+     * @param {Object} e - The event triggered by input changes.
+     */
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    /**
+     * Handles form submission, sends data to the prediction API, 
+     * and updates result or error state accordingly.
+     * @param {Object} e - The form submission event.
+     */
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError(null);
-        setResult(null);
+        setError(null); // Reset error state
+        setResult(null); // Reset result state
         try {
-            const response = await fetchPrediction(COMPANY_API_URL, formData);
-            setResult(response);
+            const response = await fetchPrediction(COMPANY_API_URL, formData); // Fetch prediction from API
+            setResult(response); // Store the prediction result
         } catch (err) {
-            setError("Error fetching prediction. Please try again.");
+            setError("Error fetching prediction. Please try again."); // Set error message
         }
     };
 
@@ -44,6 +64,7 @@ const CompanyPage = () => {
                 </p>
             </header>
             <form onSubmit={handleSubmit} className="company-form">
+                {/* Dynamically generate form fields */}
                 {[
                     { label: "Benefits", name: "benefits", placeholder: "Yes or No" },
                     { label: "Wellness Program", name: "wellness_program", placeholder: "Yes or No" },
@@ -68,7 +89,7 @@ const CompanyPage = () => {
                 ))}
                 <button type="submit" className="submit-button">Submit</button>
             </form>
-            {error && <p className="error-message">{error}</p>}
+            {error && <p className="error-message">{error}</p>} {/* Display error message */}
             {result && (
                 <div className="result-container">
                     <p className="result-message">
