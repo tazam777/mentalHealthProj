@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { EMPLOYEE_API_URL, fetchPrediction } from "../api/api";
+import "./style.css"; // Import CSS for styling
 
 const EmployeePage = () => {
     const [formData, setFormData] = useState({
@@ -32,96 +33,39 @@ const EmployeePage = () => {
         }
     };
 
+    
     return (
-        <div>
+        <div className="page-container">
             <h1>Employee Mental Health Prediction</h1>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Self-Employed:</label>
-                    <input
-                        type="text"
-                        name="self_employed"
-                        value={formData.self_employed}
-                        onChange={handleChange}
-                        placeholder="Yes or No"
-                    />
-                </div>
-                <div>
-                    <label>Work Interfere:</label>
-                    <input
-                        type="text"
-                        name="work_interfere"
-                        value={formData.work_interfere}
-                        onChange={handleChange}
-                        placeholder="Rarely, Often, etc."
-                    />
-                </div>
-                <div>
-                    <label>Remote Work:</label>
-                    <input
-                        type="text"
-                        name="remote_work"
-                        value={formData.remote_work}
-                        onChange={handleChange}
-                        placeholder="Yes or No"
-                    />
-                </div>
-                <div>
-                    <label>Family History:</label>
-                    <input
-                        type="text"
-                        name="family_history"
-                        value={formData.family_history}
-                        onChange={handleChange}
-                        placeholder="Yes or No"
-                    />
-                </div>
-                <div>
-                    <label>Benefits:</label>
-                    <input
-                        type="text"
-                        name="benefits"
-                        value={formData.benefits}
-                        onChange={handleChange}
-                        placeholder="Yes or No"
-                    />
-                </div>
-                <div>
-                    <label>Leave:</label>
-                    <input
-                        type="text"
-                        name="leave"
-                        value={formData.leave}
-                        onChange={handleChange}
-                        placeholder="Very easy, Somewhat easy, etc."
-                    />
-                </div>
-                <div>
-                    <label>Care Options:</label>
-                    <input
-                        type="text"
-                        name="care_options"
-                        value={formData.care_options}
-                        onChange={handleChange}
-                        placeholder="Yes, No, Not Sure"
-                    />
-                </div>
-                <div>
-                    <label>Treatment:</label>
-                    <input
-                        type="text"
-                        name="treatment"
-                        value={formData.treatment}
-                        onChange={handleChange}
-                        placeholder="Yes or No"
-                    />
-                </div>
+            <form onSubmit={handleSubmit} className="form">
+                {[
+                    { label: "Self-Employed", name: "self_employed", placeholder: "Yes or No" },
+                    { label: "Work Interfere", name: "work_interfere", placeholder: "Rarely, Often, etc." },
+                    { label: "Remote Work", name: "remote_work", placeholder: "Yes or No" },
+                    { label: "Family History", name: "family_history", placeholder: "Yes or No" },
+                    { label: "Benefits", name: "benefits", placeholder: "Yes or No" },
+                    { label: "Leave", name: "leave", placeholder: "Very easy, Somewhat easy, etc." },
+                    { label: "Care Options", name: "care_options", placeholder: "Yes, No, Not Sure" },
+                    { label: "Treatment", name: "treatment", placeholder: "Yes or No" },
+                ].map((field) => (
+                    <div className="form-group" key={field.name}>
+                        <label>{field.label}:</label>
+                        <input
+                            type="text"
+                            name={field.name}
+                            value={formData[field.name]}
+                            onChange={handleChange}
+                            placeholder={field.placeholder}
+                        />
+                    </div>
+                ))}
                 <button type="submit">Submit</button>
             </form>
-            {error && <p style={{ color: "red" }}>{error}</p>}
-            {prediction && <p>Prediction: {prediction}</p>}
+            {error && <p className="error-message">{error}</p>}
+            {prediction && <p className="result-message">Prediction: {prediction}</p>}
         </div>
     );
 };
+
 
 export default EmployeePage;

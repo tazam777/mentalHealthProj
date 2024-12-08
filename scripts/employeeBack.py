@@ -60,6 +60,10 @@ def preprocess_input(data):
     scaled_data = scaler.transform(input_df)
     return scaled_data
 
+@app.route('/')
+def home():
+    return "Employee API is running!", 200
+
 # Step 4: Define prediction endpoint
 @app.route('/predict', methods=['POST'])
 def predict():

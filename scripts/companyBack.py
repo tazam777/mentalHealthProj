@@ -37,6 +37,10 @@ def handle_unseen_labels(feature, value, encoder):
         return encoder.transform([encoder.classes_[0]])[0]  # Map to default (most frequent class)
     return encoder.transform([value])[0]
 
+@app.route('/')
+def home():
+    return "Company API is running!", 200
+
 @app.route('/predict', methods=['POST'])
 def predict():
     try:

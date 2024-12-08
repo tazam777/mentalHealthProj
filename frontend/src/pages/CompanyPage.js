@@ -33,96 +33,39 @@ const CompanyPage = () => {
     };
 
     return (
-        <div>
+        <div className="page-container">
             <h1>Company Mental Health Prediction</h1>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Benefits:</label>
-                    <input
-                        type="text"
-                        name="benefits"
-                        value={formData.benefits}
-                        onChange={handleChange}
-                        placeholder="Yes or No"
-                    />
-                </div>
-                <div>
-                    <label>Wellness Program:</label>
-                    <input
-                        type="text"
-                        name="wellness_program"
-                        value={formData.wellness_program}
-                        onChange={handleChange}
-                        placeholder="Yes or No"
-                    />
-                </div>
-                <div>
-                    <label>Anonymity:</label>
-                    <input
-                        type="text"
-                        name="anonymity"
-                        value={formData.anonymity}
-                        onChange={handleChange}
-                        placeholder="Yes or No"
-                    />
-                </div>
-                <div>
-                    <label>Leave:</label>
-                    <input
-                        type="text"
-                        name="leave"
-                        value={formData.leave}
-                        onChange={handleChange}
-                        placeholder="Very easy, Somewhat easy, etc."
-                    />
-                </div>
-                <div>
-                    <label>Seek Help:</label>
-                    <input
-                        type="text"
-                        name="seek_help"
-                        value={formData.seek_help}
-                        onChange={handleChange}
-                        placeholder="Yes or No"
-                    />
-                </div>
-                <div>
-                    <label>Remote Work:</label>
-                    <input
-                        type="text"
-                        name="remote_work"
-                        value={formData.remote_work}
-                        onChange={handleChange}
-                        placeholder="Yes or No"
-                    />
-                </div>
-                <div>
-                    <label>Mental Health Consequence:</label>
-                    <input
-                        type="text"
-                        name="mental_health_consequence"
-                        value={formData.mental_health_consequence}
-                        onChange={handleChange}
-                        placeholder="None, Somewhat, etc."
-                    />
-                </div>
-                <div>
-                    <label>Supervisor:</label>
-                    <input
-                        type="text"
-                        name="supervisor"
-                        value={formData.supervisor}
-                        onChange={handleChange}
-                        placeholder="Yes or No"
-                    />
-                </div>
+            <form onSubmit={handleSubmit} className="form">
+                {[
+                    { label: "Benefits", name: "benefits", placeholder: "Yes or No" },
+                    { label: "Wellness Program", name: "wellness_program", placeholder: "Yes or No" },
+                    { label: "Anonymity", name: "anonymity", placeholder: "Yes or No" },
+                    { label: "Leave", name: "leave", placeholder: "Very easy, Somewhat easy, etc." },
+                    { label: "Seek Help", name: "seek_help", placeholder: "Yes or No" },
+                    { label: "Remote Work", name: "remote_work", placeholder: "Yes or No" },
+                    { label: "Mental Health Consequence", name: "mental_health_consequence", placeholder: "None, Somewhat, etc." },
+                    { label: "Supervisor", name: "supervisor", placeholder: "Yes or No" },
+                ].map((field) => (
+                    <div className="form-group" key={field.name}>
+                        <label>{field.label}:</label>
+                        <input
+                            type="text"
+                            name={field.name}
+                            value={formData[field.name]}
+                            onChange={handleChange}
+                            placeholder={field.placeholder}
+                        />
+                    </div>
+                ))}
                 <button type="submit">Submit</button>
             </form>
-            {error && <p style={{ color: "red" }}>{error}</p>}
+            {error && <p className="error-message">{error}</p>}
             {result && (
                 <div>
-                    <p>Prediction: {result.mental_health_friendly ? "Mental Health Friendly" : "Not Mental Health Friendly"}</p>
-                    <p>Confidence: {result.confidence}%</p>
+                    <p className="result-message">
+                        Prediction: {result.mental_health_friendly ? "Mental Health Friendly" : "Not Mental Health Friendly"}
+                    </p>
+                    <p className="result-message">Confidence: {result.confidence}%</p>
                 </div>
             )}
         </div>

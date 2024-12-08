@@ -1,118 +1,137 @@
-# Mental Health Survey Data Analysis and Modeling
+# Mental Health Survey Data Analysis and Prediction Models
 
 ## Overview
-This project is an end-to-end data analysis and modeling pipeline for mental health survey data. It includes data loading, cleaning, exploratory data analysis (EDA), feature engineering, and model training. The goal is to gain insights from the survey data and develop a predictive model that can help assess mental health-friendly environments based on survey responses.
+This project aims to analyze mental health survey data and develop predictive models to assess mental health-friendly environments for companies and employees. The project includes machine learning models, APIs for predictions, and a React-based web application.
+
+## Key Features
+- **Machine Learning Models**:
+  - **Company Model**: Predicts whether a company is mental health-friendly.
+  - **Employee Model**: Predicts mental health-friendliness from the employee's perspective.
+- **Web Application**:
+  - React-based frontend with navigation for the two models.
+  - Flask-based backend APIs for predictions.
+- **Integrated Tools**:
+  - Input preprocessing using saved scalers and encoders.
+  - Seamless communication between frontend and backend with CORS enabled.
 
 ## Project Structure
 ```plaintext
 mental-health-proj/
 │
-├── data/                     # Data directory (contains survey.csv or other data files)
-│
-├── scripts/                  # Python modules for different functionalities
-│   ├── data_loader.py        # Functions for data loading and preprocessing
-│   ├── data_analysis.py      # Functions for data visualization and EDA
-│   ├── feature_engineering.py# Functions for feature engineering and encoding
-│   ├── model_training.py     # Functions for training and evaluating models
-│   └── utils.py              # Utility functions (e.g., data validation, outlier handling)
-│
-├── tests/                    # Directory for test scripts
-│
-├── main.py                   # Main script to run the entire pipeline
-│
-├── environment.yaml          # Conda environment configuration file
-│
-├── .github/                  # GitHub Actions workflows
-│   └── workflows/
-│       └── test.yaml         # Workflow for CI/CD (runs tests automatically)
-│
+├── .github/                  # GitHub workflows
+├── data/                     # Dataset storage
+│   └── survey.csv
+├── frontend/                 # React frontend
+│   ├── public/               # Static public files (favicon, manifest, etc.)
+│   ├── src/                  # React app source code
+│   │   ├── api/              # API call management
+│   │   │   └── api.js
+│   │   ├── pages/            # React pages
+│   │   │   ├── CompanyPage.js
+│   │   │   ├── EmployeePage.js
+│   │   │   └── LandingPage.js
+│   │   ├── App.js            # Main React app component
+│   │   ├── index.css         # Global styles
+│   │   └── index.js          # Entry point for React app
+├── mental-health/            # Python virtual environment
+├── models/                   # Saved models and encoders
+│   ├── company_model.pkl
+│   ├── company_scaler.pkl
+│   ├── employee_model.pkl
+│   ├── employee_scaler.pkl
+│   ├── benefits_label_encoder.pkl
+│   ├── anonymity_label_encoder.pkl
+│   ├── leave_label_encoder.pkl
+│   ├── mental_health_consequence_label_encoder.pkl
+│   ├── remote_work_label_encoder.pkl
+│   ├── seek_help_label_encoder.pkl
+│   ├── supervisor_label_encoder.pkl
+│   └── wellness_program_label_encoder.pkl
+├── scripts/                  # Backend scripts
+│   ├── companyBack.py        # Company Model API
+│   ├── employeeBack.py       # Employee Model API
+│   ├── data_loader.py        # Data loading utilities
+│   ├── data_analysis.py      # Exploratory data analysis
+│   ├── feature_engineering.py# Feature engineering utilities
+│   ├── model_training.py     # Model training and evaluation
+│   └── utils.py              # General utilities
+├── tests/                    # Unit tests
+│   ├── test_data_analysis.py
+│   ├── test_data_loader.py
+│   ├── test_feature_engineering.py
+│   ├── test_model_training.py
+│   └── test_utils.py
+├── environment.yaml          # Conda environment configuration
+├── main.py                   # Entry point for running the full pipeline
+├── mental_health_dataset.csv # Processed dataset
+├── model.ipynb               # Jupyter notebook for experimentation
 └── README.md                 # Project documentation
 ```
 
 ## Installation
+
+### Backend
 1. **Clone the repository**:
     ```bash
     git clone https://github.com/yourusername/project_name.git
     cd project_name
     ```
 
-2. **Create and activate the conda environment**:
+2. **Set up the environment**:
     ```bash
     conda env create -f environment.yaml
-    conda activate my_project_env
+    conda activate mental-health
     ```
 
 3. **Install additional dependencies (if any)**:
     ```bash
-    pip install -r requirements.txt  # Optional, if more packages are needed
+    pip install -r requirements.txt
     ```
 
-## Data
-Ensure that the `survey.csv` file is placed in the `data/` directory or update the `main.py` script with the correct path.
+### Frontend
+1. Navigate to the `frontend/` directory:
+    ```bash
+    cd frontend
+    ```
 
-### Sample Columns in `survey.csv`
-- `Age`
-- `Gender`
-- `Country`
-- `self_employed`
-- `family_history`
-- `treatment`
-- `work_interfere`
-- ... and more.
+2. Install the required dependencies:
+    ```bash
+    npm install
+    ```
+
+## Running the Project
+
+### Backend
+1. Navigate to the `scripts/` directory.
+2. Start the Flask APIs:
+   - Company Model API:
+     ```bash
+     python companyBack.py
+     ```
+     Runs on `http://localhost:5002`.
+   - Employee Model API:
+     ```bash
+     python employeeBack.py
+     ```
+     Runs on `http://localhost:5003`.
+
+### Frontend
+1. Navigate to the `frontend/` directory.
+2. Start the React app:
+    ```bash
+    npm start
+    ```
+   The app will open in your browser at `http://localhost:3000`.
 
 ## Usage
-### Running the Full Pipeline
-Execute the main script to run the entire data processing, analysis, and modeling pipeline:
-```bash
-python main.py
-```
+1. Open the web app in your browser at `http://localhost:3000`.
+2. Use the **Landing Page** to select the Company or Employee prediction model.
+3. Enter the required input fields for predictions.
+4. Submit the form to receive the prediction and confidence score.
 
-### Running Tests
-Ensure that `pytest` is installed and run the tests with:
-```bash
-pytest tests/test_data_analysis.py
-```
-
-## Modules Description
-### `scripts/data_loader.py`
-- **Functions**:
-  - `load_data(file_path)`: Loads and preprocesses the data.
-  - `clean_gender(gender)`: Cleans and standardizes gender values.
-  - `standardize_country(country_name)`: Standardizes country names using the `pycountry` library.
-
-### `scripts/data_analysis.py`
-- **Functions for Exploratory Data Analysis**:
-  - `plot_age_distribution(df)`: Plots the distribution of age.
-  - `plot_gender_distribution(df)`: Plots the distribution of gender.
-  - `plot_country_distribution(df, top_n=10)`: Plots the top N countries of respondents.
-  - `plot_self_employment(df)`: Plots the distribution of self-employment status.
-  - Additional functions for plotting company size, remote work status, mental health benefits, and more.
-
-### `scripts/feature_engineering.py`
-- **Functions**:
-  - `encode_features(df, columns)`: Encodes categorical features using `LabelEncoder`.
-  - `create_interaction_terms(df)`: Creates new features by combining existing columns.
-
-### `scripts/model_training.py`
-- **Functions**:
-  - `train_model(X, y, model=RandomForestClassifier())`: Trains and evaluates a model with a default `RandomForestClassifier`.
-  - `cross_validate_model(X, y, model, cv_folds=5)`: Performs cross-validation on the given model.
-
-### `scripts/utils.py`
-- **Functions**:
-  - `validate_data(df, required_columns)`: Validates the presence of required columns.
-  - `handle_outliers(df, column, method='IQR')`: Handles outliers using IQR or Z-score methods.
-  - `encode_and_transform(df, columns, label_encoders=None)`: Encodes and transforms columns with label encoding.
-
-## GitHub Actions
-This project includes a GitHub Actions workflow to automatically run tests:
-- **Path**: `.github/workflows/test.yaml`
-- **Trigger**: Runs on every `push` and `pull_request` to the `main` branch.
-
-
-### Key Points:
-- **Installation**: Provides detailed steps for setting up the project environment.
-- **Modules Description**: Outlines the purpose of each module and key functions.
-- **Usage**: Guides users on running the pipeline and tests.
-- **Future Work**: Mentions potential project improvements.
-- **Contributing**: Describes how others can contribute to the project.
+## Contributions
+### Git Workflow
+- **Branches**:
+  - `tests`: Reserved for test-related changes.
+  - `models`: Dedicated to model development and backend integration.
+- Changes are reviewed and merged into `main` after testing.
