@@ -66,13 +66,13 @@ const CompanyPage = () => {
             <form onSubmit={handleSubmit} className="company-form">
                 {/* Dynamically generate form fields */}
                 {[
-                    { label: "Benefits", name: "benefits", placeholder: "Yes or No" },
+                    { label: "Benefits", name: "benefits", placeholder: "Yes, No, Don't Know" },
                     { label: "Wellness Program", name: "wellness_program", placeholder: "Yes or No" },
                     { label: "Anonymity", name: "anonymity", placeholder: "Yes or No" },
-                    { label: "Leave", name: "leave", placeholder: "Very easy, Somewhat easy, etc." },
+                    { label: "Leave", name: "leave", placeholder: "Very easy, Somewhat easy, Somewhat difficult, Very difficult, Don't Know" },
                     { label: "Seek Help", name: "seek_help", placeholder: "Yes or No" },
                     { label: "Remote Work", name: "remote_work", placeholder: "Yes or No" },
-                    { label: "Mental Health Consequence", name: "mental_health_consequence", placeholder: "None, Somewhat, etc." },
+                    { label: "Mental Health Consequence", name: "mental_health_consequence", placeholder: "None, Somewhat, Yes" },
                     { label: "Supervisor", name: "supervisor", placeholder: "Yes or No" },
                 ].map((field) => (
                     <div className="form-group" key={field.name}>

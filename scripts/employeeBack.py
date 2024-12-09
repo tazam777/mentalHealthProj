@@ -95,6 +95,10 @@ def predict():
     try:
         # Parse input JSON
         input_data = request.json
+
+        # Debug: Print the incoming data from the frontend
+        print("Received input data from frontend:", input_data)
+
         if not input_data:
             return jsonify({"error": "No input data provided"}), 400
         
@@ -113,4 +117,4 @@ def predict():
 # Step 5: Run Flask app
 if __name__ == "__main__":
     # Start the Flask application on port 5003
-    app.run(debug=True, port=5003)  # Use a different port if needed
+    app.run(debug=True, port=5003)

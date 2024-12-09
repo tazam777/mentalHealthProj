@@ -66,14 +66,14 @@ const EmployeePage = () => {
             <form onSubmit={handleSubmit} className="employee-form">
                 {/* Dynamically generate form fields */}
                 {[
-                    { label: "Self-Employed", name: "self_employed", placeholder: "Yes or No" },
-                    { label: "Work Interfere", name: "work_interfere", placeholder: "Rarely, Often, etc." },
-                    { label: "Remote Work", name: "remote_work", placeholder: "Yes or No" },
-                    { label: "Family History", name: "family_history", placeholder: "Yes or No" },
-                    { label: "Benefits", name: "benefits", placeholder: "Yes or No" },
-                    { label: "Leave", name: "leave", placeholder: "Very easy, Somewhat easy, etc." },
-                    { label: "Care Options", name: "care_options", placeholder: "Yes, No, Not Sure" },
-                    { label: "Treatment", name: "treatment", placeholder: "Yes or No" },
+    { label: "Self-Employed", name: "self_employed", placeholder: "Yes or No" },
+    { label: "Work Interfere", name: "work_interfere", placeholder: "Never, Rarely, Sometimes, Often" },
+    { label: "Remote Work", name: "remote_work", placeholder: "Yes or No" },
+    { label: "Family History", name: "family_history", placeholder: "Yes or No" },
+    { label: "Benefits", name: "benefits", placeholder: "Yes, No, Don't Know" },
+    { label: "Leave", name: "leave", placeholder: "Very easy, Somewhat easy, Somewhat difficult, Very difficult, Don't Know" },
+    { label: "Care Options", name: "care_options", placeholder: "Yes, No, Not Sure" },
+    { label: "Treatment", name: "treatment", placeholder: "Yes or No" },
                 ].map((field) => (
                     <div className="form-group" key={field.name}>
                         <label htmlFor={field.name}>{field.label}:</label>
@@ -95,9 +95,7 @@ const EmployeePage = () => {
                     <p className="result-message">
                         Prediction: {result.prediction}
                     </p>
-                    <p className="result-confidence">
-                        Confidence: {result.confidence}%
-                    </p>
+                   
                 </div>
             )}
             <button className="back-button" onClick={() => navigate("/")}>
