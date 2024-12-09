@@ -8,7 +8,6 @@ on:
     branches:
       - main    # Run when a pull request is made to the main branch
 
-
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -22,30 +21,21 @@ jobs:
         with:
           environment-file: environment.yaml
           activate-environment: mental-health
-          python-version: 3.9
+          python-version: 3.9  # Match the Python version in your `environment.yaml`
 
-      - name: Install additional dependencies
-        run: pip install pytest
-
-      - name: Run tests with pytest
+      - name: Upgrade pip
         run: |
           python -m pip install --upgrade pip
 
-          conda install pytest 
-          conda install seaborn 
-          conda install numpy  
-          conda install pandas 
-          conda install matplotlib
-          conda install scikit-learn
-          conda install pycountry
-          conda install scipy
+      - name: Install additional conda dependencies
+        run: |
+          conda install -y pytest pytest-mock flask flask-cors
+          conda install -y seaborn numpy pandas matplotlib scikit-learn pycountry scipy
 
-          pip install pytest 
-          pip install seaborn 
-          pip install numpy  
-          pip install pandas 
-          pip install matplotlib
-          pip install scikit-learn
-          pip install pycountry
-          pip install scipy
-          pytest --maxfail=1 --disable-warnings
+      - name: Install additional pip dependencies
+        run: |
+          pip install pytest pytest-mock flask flask-cors
+          pip install seaborn numpy pandas matplotlib scikit-learn pycountry scipy
+
+      - name: Run tests with pytest
+        run: pytest --maxfail=1 --disable-warnings
