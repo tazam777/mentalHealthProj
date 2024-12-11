@@ -1,0 +1,16 @@
+name: mental-health
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python
+  - pip
+  - pandas
+  - numpy
+  - scikit-learn
+  - matplotlib
+  - seaborn
+  - pycountry
+  - scipy
+  - pip:
+    - pytest
